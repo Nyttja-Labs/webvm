@@ -8,7 +8,7 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         python3 vim unzip ruby nodejs \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
-        file luajit make lua50 dialog curl \
+        file luajit make dialog curl \
         less cowsay netcat-openbsd git python3-pip
 
 # Create a non-root user
