@@ -24,9 +24,9 @@ RUN chmod -R +x /home/user/examples/lua
 WORKDIR /home/user/
 
 # Set environment variables
-ENV HOME="/home/root" \
+ENV HOME="/home/user" \
     TERM="xterm" \
-    USER="root" \
+    USER="user" \
     SHELL="/bin/bash" \
     EDITOR="vim" \
     LANG="en_US.UTF-8" \
