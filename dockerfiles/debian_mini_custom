@@ -1,4 +1,4 @@
-FROM --platform=i386 i386/debian:buster
+FROM --platform=i386 i386/debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -9,7 +9,7 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make lua50 dialog curl \
-        less cowsay netcat-openbsd git
+        less cowsay netcat-openbsd git python3-pip
 
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
