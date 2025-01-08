@@ -9,24 +9,24 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make dialog curl \
-        less cowsay netcat-openbsd git python3-pip
+        less cowsay netcat-openbsd git python3-pip pipx
 
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
 
 # Copy example files to the user's home directory
-COPY --chown=user:user ./examples /home/user/examples
+# COPY --chown=user:user ./examples /home/user/examples
 
 # Make all scripts in the lua directory executable
-RUN chmod -R +x /home/user/examples/lua
+# RUN chmod -R +x /home/user/examples/lua
 
 # Set the working directory
-WORKDIR /home/user/
+WORKDIR /root/
 
 # Set environment variables
-ENV HOME="/home/user" \
+ENV HOME="/root" \
     TERM="xterm" \
-    USER="user" \
+    USER="root" \
     SHELL="/bin/bash" \
     EDITOR="vim" \
     LANG="en_US.UTF-8" \
@@ -42,7 +42,7 @@ RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git temp
 RUN wget -qO- https://aider.chat/install.sh | sh
 
 # Switch to the non-root user for subsequent operations (optional)
-USER user
+USER root
 
 # Default command
 CMD [ "/bin/bash" ]
