@@ -8,8 +8,7 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         git fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make lua5.0 dialog curl \
-        less cowsay netcat-openbsd && \
-    rm -rf /var/lib/apt/lists/*
+        less cowsay netcat-openbsd
 
 # Ensure /usr/local/bin is in PATH
 ENV PATH="/usr/local/bin:${PATH}"
