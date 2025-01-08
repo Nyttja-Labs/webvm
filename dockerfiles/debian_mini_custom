@@ -1,35 +1,23 @@
 FROM --platform=i386 i386/debian:buster
+
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Update, upgrade, and install necessary packages
+# Update and upgrade the system, then install necessary packages including git
 RUN apt-get clean && apt-get update && apt-get -y upgrade && \
     apt-get -y install apt-utils gcc \
-        python3 python3-pip vim unzip ruby nodejs \
-        git fakeroot dbus base whiptail hexedit \
+        python3 vim unzip ruby nodejs \
+        fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
-        file luajit make lua5.0 dialog curl \
-        less cowsay netcat-openbsd
+        file luajit make lua50 dialog curl \
+        less cowsay netcat-openbsd git
 
-# Ensure /usr/local/bin is in PATH
-ENV PATH="/usr/local/bin:${PATH}"
-
-# Create a new user named 'user' with password 'password'
+# Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
 
-# Install aider using pip and run the installation
-RUN python3 -m pip install aider-install && \
-    aider-install && \
-    which aider-install && \
-    ls -la /usr/local/bin | grep aider-install
-
-# Clone the specified GitHub repository into the 'template' folder
-RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template && \
-    chown -R user:user template
-
-# Copy the 'examples' directory to the user's home directory with proper ownership
+# Copy example files to the user's home directory
 COPY --chown=user:user ./examples /home/user/examples
 
-# Make all scripts in the 'lua' directory executable
+# Make all scripts in the lua directory executable
 RUN chmod -R +x /home/user/examples/lua
 
 # Set the working directory
@@ -44,8 +32,17 @@ ENV HOME="/home/user" \
     LANG="en_US.UTF-8" \
     LC_ALL="C"
 
-# Set the root password to 'password'
+# Set root password
 RUN echo 'root:password' | chpasswd
 
-# Specify the default command to run
+# Clone the GitHub repository into the 'template' directory
+RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template
+
+# Install Aider
+RUN wget -qO- https://aider.chat/install.sh | sh
+
+# Switch to the non-root user for subsequent operations (optional)
+USER user
+
+# Default command
 CMD [ "/bin/bash" ]
