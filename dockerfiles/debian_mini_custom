@@ -87,7 +87,7 @@ COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-pack
 # Upgrade pip, setuptools, and wheel in final image
 RUN pip3 install --upgrade pip setuptools wheel
 
-# Create a non-root user with sudo privileges
+# Create a non-root user with sudo privileges.
 RUN useradd -m user && echo "user:password" | chpasswd && \
     echo "user ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
