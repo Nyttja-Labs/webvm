@@ -4,13 +4,12 @@ FROM --platform=i386 i386/debian:bookworm
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install essential build dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get upgrade && apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     curl \
     gcc-multilib \
     libc6-dev \
     python3.11 \
-    python3.11-pip \
     python3-pip \
     pipx
 
