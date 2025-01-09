@@ -9,9 +9,14 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make dialog curl \
-        less cowsay netcat-openbsd git python3-pip pipx git universal-ctags sudo
+        less cowsay netcat-openbsd git python3-pip pipx git universal-ctags sudo \
+        gfortran pkg-config libopenblas-dev liblapack-dev \
+        build-essential
 
 
+RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
+
+apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
