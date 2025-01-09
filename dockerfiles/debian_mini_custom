@@ -70,14 +70,13 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     pandoc \
     cmake \
     wget \
-    python3-dev \
-    pipx
+    python3-dev
     
 
 
-RUN pip3 install --upgrade pip3 pipx --break-system-packages
-RUN python3 -m pip install --user pipx
-RUN python3 -m pipx ensurepath
+RUN pip3 install --upgrade pip3 --break-system-packages
+#RUN python3 -m pip install --user pipx
+#RUN python3 -m pipx ensurepath
 #RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
 #RUN pip3 install tiktoken --break-system-packages
 
@@ -119,7 +118,7 @@ RUN echo 'root:password' | chpasswd
 RUN mkdir /app
 
 # Install aider-chat (already installed in builder, this might be redundant)
-RUN pip3 install aider-chat --break-system-packages
+# RUN pip3 install aider-chat --break-system-packages
 
 # Clone the GitHub repository into the 'template' directory
 RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template
