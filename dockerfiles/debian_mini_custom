@@ -3,53 +3,31 @@ FROM --platform=i386 i386/debian:bookworm
 # Set non-interactive frontend for apt
 ARG DEBIAN_FRONTEND=noninteractive
 
-# Install essential build dependencies
-RUN apt-get upgrade && apt-get update && apt-get install -y --no-install-recommends \
-    build-essential \
-    curl \
-    gcc-multilib \
-    libc6-dev \
-    python3.11 \
-    python3-pip \
-    pipx
-
 # Install Rust using rustup
-RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
+#RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
 
 # Update PATH to include Rust binaries
-ENV PATH="/root/.cargo/bin:${PATH}"
+#ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Add the i386 target to Rust
-RUN rustup target add i686-unknown-linux-gnu
+#RUN rustup target add i686-unknown-linux-gnu
 
 # Configure Cargo to use gcc for i386 linking using Heredoc
-RUN mkdir -p /root/.cargo && \
-    tee /root/.cargo/config.toml > /dev/null <<EOF
-[target.i686-unknown-linux-gnu]
-linker = "gcc -m32"
-EOF
+#RUN mkdir -p /root/.cargo && \
+#    tee /root/.cargo/config.toml > /dev/null <<EOF
+#[target.i686-unknown-linux-gnu]
+#linker = "gcc -m32"
+#EOF
 
 # Set environment variable for Cargo build target
 ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
 
 # Install runtime dependencies and additional packages
-RUN apt-get upgrade && apt-get install -y --no-install-recommends \
+RUN apt-get update && apt-get upgrade && apt-get install -y --no-install-recommends \
     git \
-    unzip \
-    ruby \
-    nodejs \
     fakeroot \
     dbus \
-    whiptail \
-    hexedit \
-    patch \
-    wamerican \
-    ucf \
-    file \
     make \
-    dialog \
-    less \
-    cowsay \
     netcat-openbsd \
     universal-ctags \
     sudo \
@@ -58,6 +36,12 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     cmake \
     wget \
     python3-dev
+    build-essential \
+    curl \
+    gcc-multilib \
+    libc6-dev \
+    python3.11 \
+    pipx
     
 
 
