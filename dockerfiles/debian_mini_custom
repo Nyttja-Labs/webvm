@@ -74,11 +74,13 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     
 
 
-# Upgrade pip, setuptools, and wheel
-RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
+RUN pip3 install tiktoken --break-system-packages
 
-# Install tiktoken and other Python dependencies
-RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
+# Upgrade pip, setuptools, and wheel
+#RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
+
+# Install tiktoken and other Python dependencies tiktoken==0.5.1
+#RUN pip3 install aider-chat --break-system-packages
 
 # Copy installed Python packages from builder
 # COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
