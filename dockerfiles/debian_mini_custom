@@ -1,4 +1,5 @@
-FROM --platform=i386 i386/debian:bookworm
+#FROM --platform=i386 i386/debian:bookworm
+FROM --platform=amd64 debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 
