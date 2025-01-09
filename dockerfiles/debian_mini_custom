@@ -25,10 +25,12 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 # Add the i386 target to Rust
 RUN rustup target add i686-unknown-linux-gnu
 
-# Configure Cargo to use gcc for i386 linking
-RUN mkdir -p /root/.cargo
-RUN echo '[target.i686-unknown-linux-gnu]
-linker = "gcc -m32"' > /root/.cargo/config.toml
+# Configure Cargo to use gcc for i386 linking using Heredoc
+RUN mkdir -p /root/.cargo && \
+    tee /root/.cargo/config.toml > /dev/null <<EOF
+[target.i686-unknown-linux-gnu]
+linker = "gcc -m32"
+EOF
 
 # Set environment variable for Cargo build target
 ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
@@ -65,6 +67,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     manpages \
     file \
     luajit \
+    make \
     dialog \
     less \
     cowsay \
@@ -89,6 +92,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Copy installed Python packages from builder
 COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+
+# Optionally, copy Rust configuration if needed at runtime
+# COPY --from=builder /root/.cargo /root/.cargo
+# ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Upgrade pip, setuptools, and wheel in final image
 RUN pip3 install --upgrade pip setuptools wheel
@@ -120,6 +127,9 @@ RUN echo 'root:password' | chpasswd
 
 # Create /app directory
 RUN mkdir /app
+
+# Install aider-chat (already installed in builder, this might be redundant)
+RUN pip3 install aider-chat --break-system-packages
 
 # Clone the GitHub repository into the 'template' directory
 RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template
