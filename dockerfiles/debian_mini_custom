@@ -32,12 +32,6 @@ EOF
 # Set environment variable for Cargo build target
 ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
 
-# Upgrade pip, setuptools, and wheel
-RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
-
-# Install tiktoken and other Python dependencies
-RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
-
 # Install runtime dependencies and additional packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     libssl1.1 \
@@ -78,12 +72,15 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     cmake \
     wget \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
+    
+# Upgrade pip, setuptools, and wheel
+RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
+
+# Install tiktoken and other Python dependencies
+RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
 
 # Copy installed Python packages from builder
 # COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-
-# Upgrade pip, setuptools, and wheel in final image
-RUN pip3 install --upgrade pip setuptools wheel
 
 # Create a non-root user with sudo privileges.
 RUN useradd -m user && echo "user:password" | chpasswd && \
