@@ -1,7 +1,7 @@
 # ===========================
 # Stage 1: Builder
 # ===========================
-FROM --platform=i386 i386/debian:bookworm-slim AS builder
+FROM --platform=i386 i386/debian:bookworm AS builder
 
 # Set non-interactive frontend for apt
 ARG DEBIAN_FRONTEND=noninteractive
@@ -44,7 +44,7 @@ RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
 # ===========================
 # Stage 2: Final Image
 # ===========================
-FROM --platform=i386 i386/debian:bookworm-slim
+FROM --platform=i386 i386/debian:bookworm
 
 # Set non-interactive frontend for apt
 ARG DEBIAN_FRONTEND=noninteractive
