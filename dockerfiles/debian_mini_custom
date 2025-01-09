@@ -12,8 +12,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3.11 \
     python3.11-pip \
     python3-pip \
-    pipx \
-    && rm -rf /var/lib/apt/lists/*
+    pipx
 
 # Install Rust using rustup
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y
@@ -82,7 +81,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy installed Python packages from builder
-COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+# COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
 # Upgrade pip, setuptools, and wheel in final image
 RUN pip3 install --upgrade pip setuptools wheel
