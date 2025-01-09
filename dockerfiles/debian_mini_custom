@@ -33,7 +33,7 @@ EOF
 ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
 
 # Upgrade pip, setuptools, and wheel
-RUN pip3 install --upgrade pip setuptools wheel
+RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
 
 # Install tiktoken and other Python dependencies
 RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
