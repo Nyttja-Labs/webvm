@@ -7,6 +7,7 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade
 RUN apt-get -y install curl build-essential gcc make && curl https://sh.rustup.rs -sSf | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
 
+
 # Update and upgrade the system, then install necessary packages including git
 RUN apt-get -y install apt-utils gcc \
         python3.11 vim unzip ruby nodejs \
@@ -18,11 +19,9 @@ RUN apt-get -y install apt-utils gcc \
         libjpeg-dev libpng-dev zlib1g-dev libtiff-dev libfreetype6-dev universal-ctags \
         libportaudio2 pandoc cmake wget 
 
-
-
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
+RUN pip3 install --upgrade pip setuptools wheel tiktoken==0.5.1 --break-system-packages
 
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
