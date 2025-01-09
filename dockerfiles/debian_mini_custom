@@ -35,7 +35,6 @@ ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
 # Install runtime dependencies and additional packages
 RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     git \
-    vim \
     unzip \
     ruby \
     nodejs \
@@ -46,28 +45,16 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     patch \
     wamerican \
     ucf \
-    manpages \
     file \
-    luajit \
     make \
     dialog \
     less \
     cowsay \
     netcat-openbsd \
-    pipx \
     universal-ctags \
     sudo \
     gfortran \
     pkg-config \
-    libopenblas-dev \
-    liblapack-dev \
-    libjpeg-dev \
-    libpng-dev \
-    zlib1g-dev \
-    libtiff-dev \
-    libfreetype6-dev \
-    libportaudio2 \
-    pandoc \
     cmake \
     wget \
     python3-dev
@@ -87,6 +74,8 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
 
 # Copy installed Python packages from builder
 # COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
+
+RUN python3 -m pip install -U pip wheel setuptools
 
 # Create a non-root user with sudo privileges.
 RUN useradd -m user && echo "user:password" | chpasswd && \
