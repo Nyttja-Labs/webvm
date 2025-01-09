@@ -33,7 +33,7 @@ EOF
 ENV CARGO_BUILD_TARGET=i686-unknown-linux-gnu
 
 # Install runtime dependencies and additional packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     git \
     vim \
     unzip \
@@ -69,8 +69,11 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libportaudio2 \
     pandoc \
     cmake \
-    wget
+    wget \
+    python3-dev
     
+
+
 # Upgrade pip, setuptools, and wheel
 RUN pip3 install --upgrade pip setuptools wheel --break-system-packages
 
