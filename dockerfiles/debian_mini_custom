@@ -11,7 +11,8 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         file luajit make dialog curl \
         less cowsay netcat-openbsd git python3-pip pipx git universal-ctags sudo \
         gfortran pkg-config libopenblas-dev liblapack-dev \
-        build-essential
+        build-essential rustc cargo \
+        libjpeg-dev libpng-dev zlib1g-dev libtiff-dev libfreetype6-dev \
 
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
