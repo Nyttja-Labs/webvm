@@ -9,7 +9,7 @@ ENV PATH="/root/.cargo/bin:${PATH}"
 
 # Update and upgrade the system, then install necessary packages including git
 RUN apt-get -y install apt-utils gcc \
-        python3.12 vim unzip ruby nodejs \
+        python3.11 vim unzip ruby nodejs \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make dialog \
