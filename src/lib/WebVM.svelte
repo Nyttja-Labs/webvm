@@ -1,15 +1,15 @@
 <script>
+	import SideBar from '$lib/SideBar.svelte';
+	import { cpuActivity, cpuPercentage, diskActivity, diskLatency } from '$lib/activities.js';
+	import { displayConfig } from '$lib/anthropic.js';
+	import '$lib/global.css';
+	import { errorMessage, introMessage, unexpectedErrorMessage } from '$lib/messages.js';
+	import { startLogin } from '$lib/network.js';
+	import '@fortawesome/fontawesome-free/css/all.min.css';
+	import '@xterm/xterm/css/xterm.css';
+	import Nav from 'labs/packages/global-navbar/src/Nav.svelte';
 	import { onMount } from 'svelte';
 	import { get } from 'svelte/store';
-	import Nav from 'labs/packages/global-navbar/src/Nav.svelte';
-	import SideBar from '$lib/SideBar.svelte';
-	import '$lib/global.css';
-	import '@xterm/xterm/css/xterm.css'
-	import '@fortawesome/fontawesome-free/css/all.min.css'
-	import { networkInterface, startLogin } from '$lib/network.js'
-	import { cpuActivity, diskActivity, cpuPercentage, diskLatency } from '$lib/activities.js'
-	import { introMessage, errorMessage, unexpectedErrorMessage } from '$lib/messages.js'
-	import { displayConfig } from '$lib/anthropic.js'
 
 	export let configObj = null;
 	export let processCallback = null;
@@ -282,6 +282,7 @@
 		var webDevice = await CheerpX.WebDevice.create("");
 		var documentsDevice = await CheerpX.WebDevice.create("documents");
 		var dataDevice = await CheerpX.DataDevice.create();
+		var networkInterface = { authKey: "tskey-auth-k1PybHKFcy11CNTRL-iJsmgEeG2EVZaECeXn6LDVXAozzoyyMH" }; 
 		var mountPoints = [
 			// The root filesystem, as an Ext2 image
 			{type:"ext2", dev:overlayDevice, path:"/"},
