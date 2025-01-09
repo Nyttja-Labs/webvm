@@ -13,10 +13,6 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
 
 
 
-RUN mkdir /app
-
-RUN pip3 install aider-chat --break-system-packages
-
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
 
@@ -41,11 +37,16 @@ ENV HOME="/home/user" \
 # Set root password
 RUN echo 'root:password' | chpasswd
 
+
+RUN mkdir /app
+RUN pip3 install aider-chat --break-system-packages
+
 # Clone the GitHub repository into the 'template' directory
 RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template
 
 # Install Aider
-RUN wget -qO- https://aider.chat/install.sh | sh
+#RUN wget -qO- https://aider.chat/install.sh | sh
+
 
 # Switch to the non-root user for subsequent operations (optional)
 USER user
