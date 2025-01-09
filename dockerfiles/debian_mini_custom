@@ -75,7 +75,7 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
 # Copy installed Python packages from builder
 # COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
-RUN python3 -m pip install -U pip wheel setuptools
+RUN python3 -m pip install -U pip wheel setuptools --break-system-packages
 
 # Create a non-root user with sudo privileges.
 RUN useradd -m user && echo "user:password" | chpasswd && \
