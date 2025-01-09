@@ -74,6 +74,7 @@ RUN apt-get upgrade && apt-get install -y --no-install-recommends \
     
 
 
+RUN pip3 install --upgrade pip3
 RUN pip3 install tiktoken --break-system-packages
 
 # Upgrade pip, setuptools, and wheel
