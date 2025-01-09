@@ -5,11 +5,17 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Update and upgrade the system, then install necessary packages including git
 RUN apt-get clean && apt-get update && apt-get -y upgrade && \
     apt-get -y install apt-utils gcc \
-        python3 vim unzip ruby nodejs \
+        python3.11 vim unzip ruby nodejs \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
         file luajit make dialog curl \
-        less cowsay netcat-openbsd git python3-pip pipx
+        less cowsay netcat-openbsd git python3-pip pipx git universal-ctags sudo
+
+
+
+RUN mkdir /app
+
+RUN pip3 install aider-chat
 
 # Create a non-root user
 RUN useradd -m user && echo "user:password" | chpasswd
