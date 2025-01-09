@@ -2,6 +2,11 @@ FROM --platform=i386 i386/debian:bookworm
 
 ARG DEBIAN_FRONTEND=noninteractive
 
+
+RUN apt-get clean && apt-get update && apt-get -y upgrade
+
+RUN apt-get -y install curl
+
 RUN curl https://sh.rustup.rs -sSf | sh -s -- -y && \
     /root/.cargo/bin/rustup default stable && \
     /root/.cargo/bin/rustc --version
@@ -14,7 +19,7 @@ RUN apt-get clean && apt-get update && apt-get -y upgrade && \
         python3.11 vim unzip ruby nodejs \
         fakeroot dbus base whiptail hexedit \
         patch wamerican ucf manpages \
-        file luajit make dialog curl \
+        file luajit make dialog \
         less cowsay netcat-openbsd git python3-pip pipx git universal-ctags sudo \
         gfortran pkg-config libopenblas-dev liblapack-dev \
         build-essential libjpeg-dev libpng-dev zlib1g-dev libtiff-dev libfreetype6-dev
