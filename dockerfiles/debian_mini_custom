@@ -1,7 +1,4 @@
-# ===========================
-# Stage 1: Builder
-# ===========================
-FROM --platform=i386 i386/debian:bookworm AS builder
+FROM --platform=i386 i386/debian:bookworm
 
 # Set non-interactive frontend for apt
 ARG DEBIAN_FRONTEND=noninteractive
@@ -40,14 +37,6 @@ RUN pip3 install --upgrade pip setuptools wheel
 
 # Install tiktoken and other Python dependencies
 RUN pip3 install tiktoken==0.5.1 aider-chat --break-system-packages
-
-# ===========================
-# Stage 2: Final Image
-# ===========================
-FROM --platform=i386 i386/debian:bookworm
-
-# Set non-interactive frontend for apt
-ARG DEBIAN_FRONTEND=noninteractive
 
 # Install runtime dependencies and additional packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -91,11 +80,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Copy installed Python packages from builder
-COPY --from=builder /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
-
-# Optionally, copy Rust configuration if needed at runtime
-# COPY --from=builder /root/.cargo /root/.cargo
-# ENV PATH="/root/.cargo/bin:${PATH}"
+COPY /usr/local/lib/python3.11/site-packages /usr/local/lib/python3.11/site-packages
 
 # Upgrade pip, setuptools, and wheel in final image
 RUN pip3 install --upgrade pip setuptools wheel
@@ -134,7 +119,7 @@ RUN pip3 install aider-chat --break-system-packages
 # Clone the GitHub repository into the 'template' directory
 RUN git clone https://github.com/Nyttja-Labs/Template-server-experiment.git template
 
-# Optional: Install Aider via script (commented out)
+
 # RUN wget -qO- https://aider.chat/install.sh | sh
 
 # Switch to the non-root user for subsequent operations
